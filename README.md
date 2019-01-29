@@ -20,7 +20,7 @@ The library will try to access the data in three different ways:
 
 The library is lazy by default and load in memory the datasets only when required.
 
-```
+```python
 dataset = echr.binary.get_dataset(article='1')  # Define the dataset model
 X, y = dataset.load()  # Load in memory the dataset
 
@@ -30,17 +30,15 @@ X, y = dataset.X, dataset.y  # Explicit request to the data
 # alternative syntax, useful to update the model (see below)
 X = dataset.get_X()
 y = dataset.get_y()
-
 ```
 
 For multiclass and multilabel problem:
-```
+```python
 dataset = echr.multilabel.get_dataset()
 X, y = dataset.load()
 
 dataset = echr.multiclass.get_dataset()
 X, y = dataset.load()
-
 ```
 
 ## Selecting and modifying the flavor
@@ -51,7 +49,7 @@ ECHR-OD datasets come in different flavors:
 - Bag-of-Words
 
 By default, ```get_dataset``` dataset define a model that will load all flavors. You can specify the one you want to select:
-```
+```python
 dataset = echr.binary.get_dataset(article='1', flavors=[echr.Flavor.desc])
 dataset = echr.binary.get_dataset(article='1', flavors=[echr.Flavor.desc, echr.Flavor.bow])
 dataset = echr.binary.get_dataset(article='1', flavors=None)  # Load all (default)
@@ -60,18 +58,18 @@ dataset = echr.binary.get_dataset(article='1', flavors=None)  # Load all (defaul
 **REMARK:** loading the flavors is different from returning the dataset. When accessing the dataset, the different flavors will be stacked.
 
 It is possible to access a specific flavor using ```get_X```:
-```
+```python
 X = dataset.get_X(echr.Flavor.bow)  # Works only if echr.Flavor.bow is in the flavors
 ```
 
 It is possible to reset the flavors or to add new flavors at any moment:
-```
+```python
 dataset.set_flavors([echr.Flavor.desc])
 dataset.add_flavor(echr.Flavor.desc)
 ```
 
 You can check if a flavor is loaded:
-```
+```python
 dataset.is_loaded(echr.Flavor.desc)
 ```
 
@@ -84,7 +82,7 @@ Some preprocessing operators are provided such as ```filter``` to filter the fea
 
 The following example shows how to chain the registration of two preprocessing operator. The first one filter the feature of the descriptive flavors that appear only once while the second filter the token of the Bag-of-Word representation that appear less than 50 times in the whole corpus.
 
-```
+```python
 dataset = dataset.register_preprocess(
         echr.Flavor.desc, 
         partial(echr.preprocessing.filter, threshold=1)
@@ -96,7 +94,7 @@ dataset = dataset.register_preprocess(
 
 
 If you change the model, notably by registering new preprocessing operators, you must use ```force=True``` when requesting the data to update the part already loaded:
-```
+```python
 X = dataset.get_X(force=True)
 
 # alternatively
