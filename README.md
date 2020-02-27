@@ -1,3 +1,5 @@
+:no_entry: [DEPRECATED] THIS REPOSITORY IS DEPRECATED: New versions of ECHR-OD database are compatible with pandas and numpy.
+
 # ECHR-OD loader
 
 This project is a Python library to ease loading and manipulating the datasets provided by the European Court of Human Rights project.
